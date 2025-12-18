@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SENSEA 2025 Feedback Survey</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.3);
+            height: 8px;
+            margin-top: 20px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: #4caf50;
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 24px;
+            color: #667eea;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .question {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .question:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-label {
+            display: block;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #2d3748;
+        }
+
+        .question-label .required {
+            color: #e53e3e;
+            margin-left: 4px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f7fafc;
+        }
+
+        .option input[type="radio"],
+        .option input[type="checkbox"] {
+            margin-right: 12px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .option label {
+            cursor: pointer;
+            flex: 1;
+            font-size: 15px;
+        }
+
+        .rating-scale {
+            width: 100%;
+            height: 8px;
+            margin: 20px 0;
+        }
+
+        .scale-container {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+        }
+
+        .scale-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 13px;
+            color: #718096;
+        }
+
+        .scale-value {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 14px;
+            resize: vertical;
+            transition: border-color 0.2s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        button {
+            padding: 14px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+
+        .error {
+            border: 2px solid #e53e3e !important;
+            background: #fff5f5 !important;
+        }
+
+        .error-message {
+            color: #e53e3e;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        .thank-you {
+            display: none;
+            text-align: center;
+            padding: 60px 30px;
+        }
+
+        .thank-you.active {
+            display: block;
+        }
+
+        .thank-you h2 {
+            color: #667eea;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .thank-you p {
+            font-size: 18px;
+            color: #4a5568;
+            margin-bottom: 15px;
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .question {
+                padding: 15px;
+            }
+
+            .button-container {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+
+        /* Accessibility */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+            padding: 0;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        input:focus,
+        textarea:focus,
+        button:focus {
+            outline: 3px solid #667eea;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>SENSEA 2025 Feedback Survey</h1>
+            <p>We value your opinion! Help us improve your SENSEA experience.</p>
+            <p style="font-size: 14px; margin-top: 10px;">Estimated time: 8-12 minutes</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+        </div>
+
+        <div class="content" id="surveyContent">
+            <!-- Section 1: Spa Day Pass Pricing Review -->
+            <div class="section" data-section="1">
+                <h2 class="section-title">1. Spa Day Pass Pricing Review</h2>
+
+                <div class="question" data-required="true">
+                    <label class="question-label">
+                        1.1 How would you rate the current pricing for our Spa Day Pass?
+                        <span class="required">*</span>
+                    </label>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" name="q1-1" value="very-fair" id="q1-1-1">
+                            <label for="q1-1-1">Very Fair</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q1-1" value="fair" id="q1-1-2">
+                            <label for="q1-1-2">Fair</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q1-1" value="slightly-high" id="q1-1-3">
+                            <label for="q1-1-3">Slightly High</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q1-1" value="too-high" id="q1-1-4">
+                            <label for="q1-1-4">Too High</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question" data-required="true">
+                    <label class="question-label">
+                        1.2 On a scale of 1-10, how likely are you to purchase a Spa Day Pass at the current price?
+                        <span class="required">*</span>
+                    </label>
+                    <div class="scale-container">
+                        <div class="scale-value" id="q1-2-value">5</div>
+                        <input type="range" name="q1-2" id="q1-2" min="1" max="10" value="5" 
+                               class="rating-scale" oninput="updateScaleValue('q1-2')">
+                        <div class="scale-labels">
+                            <span>Not likely at all</span>
+                            <span>Very likely</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question" data-required="false">
+                    <label class="question-label">
+                        1.4 What are your thoughts on our current Spa Day Pass pricing?
+                    </label>
+                    <textarea name="q1-4" placeholder="Share your thoughts here..."></textarea>
+                </div>
+            </div>
+
+            <!-- More sections would be added here following the same pattern -->
+            
+            <div class="button-container">
+                <button type="button" class="btn-secondary" onclick="saveDraft()">Save Draft</button>
+                <button type="button" class="btn-primary" onclick="submitSurvey()">Submit Survey</button>
+            </div>
+        </div>
+
+        <div class="thank-you" id="thankYou">
+            <h2>Thank You! 🎉</h2>
+            <p>Your feedback has been submitted successfully.</p>
+            <p>We appreciate you taking the time to help us improve SENSEA.</p>
+            <p style="margin-top: 30px; font-size: 16px;">
+                Questions? Contact us at <a href="mailto:feedback@sensea.com" style="color: #667eea;">feedback@sensea.com</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Update rating scale display
+        function updateScaleValue(inputId) {
+            const input = document.getElementById(inputId);
+            const display = document.getElementById(inputId + '-value');
+            display.textContent = input.value;
+        }
+
+        // Validate section
+        function validateSection(sectionElement) {
+            const requiredQuestions = sectionElement.querySelectorAll('[data-required="true"]');
+            let isValid = true;
+
+            requiredQuestions.forEach(question => {
+                const inputs = question.querySelectorAll('input, textarea, select');
+                let hasValue = false;
+
+                inputs.forEach(input => {
+                    if (input.type === 'radio' || input.type === 'checkbox') {
+                        if (input.checked) hasValue = true;
+                    } else if (input.value.trim() !== '') {
+                        hasValue = true;
+                    }
+                });
+
+                if (!hasValue) {
+                    question.classList.add('error');
+                    isValid = false;
+                } else {
+                    question.classList.remove('error');
+                }
+            });
+
+            return isValid;
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const sections = document.querySelectorAll('.section');
+            let completedSections = 0;
+
+            sections.forEach(section => {
+                if (validateSection(section)) {
+                    completedSections++;
+                }
+            });
+
+            const progress = (completedSections / sections.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        // Save draft
+        function saveDraft() {
+            const formData = new FormData(document.querySelector('form') || document);
+            localStorage.setItem('sensea-survey-draft', JSON.stringify(Object.fromEntries(formData)));
+            alert('Draft saved! You can continue later.');
+        }
+
+        // Submit survey
+        function submitSurvey() {
+            const sections = document.querySelectorAll('.section');
+            let allValid = true;
+
+            sections.forEach(section => {
+                if (!validateSection(section)) {
+                    allValid = false;
+                }
+            });
+
+            if (!allValid) {
+                alert('Please complete all required fields marked with *');
+                return;
+            }
+
+            // Simulate submission
+            document.getElementById('surveyContent').style.display = 'none';
+            document.getElementById('thankYou').classList.add('active');
+            
+            // Clear draft
+            localStorage.removeItem('sensea-survey-draft');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load draft if exists
+            const draft = localStorage.getItem('sensea-survey-draft');
+            if (draft && confirm('You have a saved draft. Would you like to continue from where you left off?')) {
+                // Restore draft data
+                const data = JSON.parse(draft);
+                for (let [name, value] of Object.entries(data)) {
+                    const input = document.querySelector(`[name="${name}"][value="${value}"]`);
+                    if (input) {
+                        input.checked = true;
+                    } else {
+                        const textInput = document.querySelector(`[name="${name}"]`);
+                        if (textInput) textInput.value = value;
+                    }
+                }
+            }
+
+            // Update progress on input change
+            document.querySelectorAll('input, textarea, select').forEach(element => {
+                element.addEventListener('change', updateProgress);
+            });
+
+            // Initialize progress
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
