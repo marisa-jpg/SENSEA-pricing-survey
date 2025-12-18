@@ -1,0 +1,527 @@
+{
+  "survey": {
+    "title": "SENSEA 2025 Feedback Survey",
+    "description": "Welcome to SENSEA's 2025 Feedback Initiative! We value your opinion and want to hear your thoughts on our services.",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Spa Day Pass Pricing Review",
+        "questions": [
+          {
+            "id": "q1.1",
+            "type": "multiple-choice",
+            "question": "How would you rate the current pricing for our Spa Day Pass?",
+            "options": [
+              "Very Fair",
+              "Fair",
+              "Slightly High",
+              "Too High"
+            ],
+            "required": true
+          },
+          {
+            "id": "q1.2",
+            "type": "rating-scale",
+            "question": "On a scale of 1-10, how likely are you to purchase a Spa Day Pass at the current price?",
+            "scale": {
+              "min": 1,
+              "max": 10,
+              "minLabel": "Not likely at all",
+              "maxLabel": "Very likely"
+            },
+            "required": true
+          },
+          {
+            "id": "q1.3",
+            "type": "multiple-choice",
+            "question": "What price would you consider ideal for a Spa Day Pass?",
+            "options": [
+              "Under €30",
+              "€30-€40",
+              "€40-€50",
+              "€50-€60",
+              "Over €60"
+            ],
+            "required": true
+          },
+          {
+            "id": "q1.4",
+            "type": "open-text",
+            "question": "What are your thoughts on our current Spa Day Pass pricing?",
+            "required": false
+          }
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "New Membership Offering Test",
+        "questions": [
+          {
+            "id": "q2.1",
+            "type": "multiple-choice",
+            "question": "Would you be interested in a SENSEA membership program?",
+            "options": [
+              "Very Interested",
+              "Somewhat Interested",
+              "Neutral",
+              "Not Very Interested",
+              "Not Interested at All"
+            ],
+            "required": true
+          },
+          {
+            "id": "q2.2",
+            "type": "multiple-choice",
+            "question": "What type of membership would appeal to you most?",
+            "options": [
+              "Monthly membership with unlimited access",
+              "Annual membership with discounted rates",
+              "Quarterly membership with flexible terms",
+              "Pay-per-visit with loyalty points",
+              "Other"
+            ],
+            "allowOther": true,
+            "required": true
+          },
+          {
+            "id": "q2.3",
+            "type": "multiple-select",
+            "question": "What benefits would you expect from a membership program?",
+            "options": [
+              "Discounted day pass rates",
+              "Priority booking",
+              "Exclusive member events",
+              "Complimentary treatments",
+              "Guest passes",
+              "Retail product discounts",
+              "Extended hours access",
+              "Other"
+            ],
+            "allowOther": true,
+            "required": false
+          },
+          {
+            "id": "q2.4",
+            "type": "multiple-choice",
+            "question": "What monthly price would you find reasonable for a membership?",
+            "options": [
+              "Under €50",
+              "€50-€75",
+              "€75-€100",
+              "€100-€150",
+              "Over €150"
+            ],
+            "required": true
+          },
+          {
+            "id": "q2.5",
+            "type": "open-text",
+            "question": "Additional thoughts on membership offerings:",
+            "required": false
+          }
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Social and Ritual Events",
+        "questions": [
+          {
+            "id": "q3.1",
+            "type": "multiple-choice",
+            "question": "Have you attended any of our social or ritual events?",
+            "options": [
+              "Yes, multiple times",
+              "Yes, once",
+              "No, but I'm interested",
+              "No, not interested"
+            ],
+            "required": true
+          },
+          {
+            "id": "q3.2",
+            "type": "multiple-choice",
+            "question": "How would you rate the social events you've attended?",
+            "options": [
+              "Excellent",
+              "Good",
+              "Average",
+              "Below Average",
+              "Poor",
+              "N/A - Haven't attended"
+            ],
+            "required": true
+          },
+          {
+            "id": "q3.3",
+            "type": "multiple-select",
+            "question": "What types of events would you like to see at SENSEA?",
+            "options": [
+              "Wellness workshops",
+              "Meditation and mindfulness sessions",
+              "Spa parties for groups",
+              "Seasonal celebrations",
+              "Health and nutrition seminars",
+              "Yoga and fitness classes",
+              "Beauty and skincare workshops",
+              "Other"
+            ],
+            "allowOther": true,
+            "required": false
+          },
+          {
+            "id": "q3.4",
+            "type": "multiple-choice",
+            "question": "How often would you attend social events at SENSEA?",
+            "options": [
+              "Weekly",
+              "Bi-weekly",
+              "Monthly",
+              "Quarterly",
+              "Rarely",
+              "Never"
+            ],
+            "required": true
+          },
+          {
+            "id": "q3.5",
+            "type": "open-text",
+            "question": "What are your thoughts on our social and ritual events?",
+            "required": false
+          }
+        ]
+      },
+      {
+        "id": "section-4",
+        "title": "Spa Opening Hours Review (Off-Peak)",
+        "questions": [
+          {
+            "id": "q4.1",
+            "type": "multiple-choice",
+            "question": "How satisfied are you with our current opening hours?",
+            "options": [
+              "Very Satisfied",
+              "Satisfied",
+              "Neutral",
+              "Dissatisfied",
+              "Very Dissatisfied"
+            ],
+            "required": true
+          },
+          {
+            "id": "q4.2",
+            "type": "multiple-choice",
+            "question": "Would you visit during off-peak hours if we offered special discounts?",
+            "options": [
+              "Definitely Yes",
+              "Probably Yes",
+              "Maybe",
+              "Probably Not",
+              "Definitely Not"
+            ],
+            "required": true
+          },
+          {
+            "id": "q4.3",
+            "type": "multiple-select",
+            "question": "Which off-peak times would you most likely visit?",
+            "options": [
+              "Early morning (6am-9am)",
+              "Mid-morning (9am-12pm)",
+              "Early afternoon (12pm-3pm)",
+              "Late evening (7pm-10pm)",
+              "Weekday mornings",
+              "Weekday afternoons"
+            ],
+            "required": false
+          },
+          {
+            "id": "q4.4",
+            "type": "multiple-choice",
+            "question": "What discount percentage would motivate you to visit during off-peak hours?",
+            "options": [
+              "10-15%",
+              "15-20%",
+              "20-30%",
+              "30% or more"
+            ],
+            "required": true
+          },
+          {
+            "id": "q4.5",
+            "type": "open-text",
+            "question": "Additional feedback on opening hours:",
+            "required": false
+          }
+        ]
+      },
+      {
+        "id": "section-5",
+        "title": "Loyalty Program",
+        "questions": [
+          {
+            "id": "q5.1",
+            "type": "multiple-choice",
+            "question": "How important is a loyalty program to you when choosing a spa?",
+            "options": [
+              "Very Important",
+              "Somewhat Important",
+              "Neutral",
+              "Not Very Important",
+              "Not Important at All"
+            ],
+            "required": true
+          },
+          {
+            "id": "q5.2",
+            "type": "multiple-select",
+            "question": "What loyalty rewards would you value most?",
+            "options": [
+              "Points for free treatments",
+              "Birthday rewards",
+              "Referral bonuses",
+              "Early access to new services",
+              "Exclusive member pricing",
+              "Complimentary upgrades",
+              "Retail product rewards",
+              "Free guest passes"
+            ],
+            "maxSelections": 3,
+            "required": true
+          },
+          {
+            "id": "q5.3",
+            "type": "multiple-choice",
+            "question": "How would you prefer to track your loyalty points?",
+            "options": [
+              "Mobile app",
+              "Physical card",
+              "Email updates",
+              "Online account portal",
+              "No preference"
+            ],
+            "required": true
+          },
+          {
+            "id": "q5.4",
+            "type": "rating-scale",
+            "question": "On a scale of 1-10, how likely are you to recommend SENSEA with a loyalty program?",
+            "scale": {
+              "min": 1,
+              "max": 10,
+              "minLabel": "Not likely at all",
+              "maxLabel": "Very likely"
+            },
+            "required": true
+          },
+          {
+            "id": "q5.5",
+            "type": "open-text",
+            "question": "What are your thoughts on implementing a loyalty program at SENSEA?",
+            "required": false
+          }
+        ]
+      },
+      {
+        "id": "section-6",
+        "title": "Treatments and Additional Offerings",
+        "questions": [
+          {
+            "id": "q6.1",
+            "type": "multiple-select",
+            "question": "Which treatments have you experienced at SENSEA?",
+            "options": [
+              "Massage therapy",
+              "Facial treatments",
+              "Body wraps",
+              "Hydrotherapy",
+              "Sauna/Steam room",
+              "Aromatherapy",
+              "Other",
+              "Haven't experienced any yet"
+            ],
+            "allowOther": true,
+            "required": true
+          },
+          {
+            "id": "q6.2",
+            "type": "multiple-choice",
+            "question": "How would you rate the quality of treatments you've received?",
+            "options": [
+              "Excellent",
+              "Good",
+              "Average",
+              "Below Average",
+              "Poor",
+              "N/A"
+            ],
+            "required": true
+          },
+          {
+            "id": "q6.3",
+            "type": "multiple-select",
+            "question": "What new treatments would you like to see offered?",
+            "options": [
+              "Hot stone massage",
+              "Reflexology",
+              "Acupuncture",
+              "Cryotherapy",
+              "IV therapy",
+              "Meditation sessions",
+              "Personal training",
+              "Nutritional counseling",
+              "Other"
+            ],
+            "allowOther": true,
+            "required": false
+          },
+          {
+            "id": "q6.4",
+            "type": "multiple-choice",
+            "question": "How satisfied are you with the variety of treatments currently offered?",
+            "options": [
+              "Very Satisfied",
+              "Satisfied",
+              "Neutral",
+              "Dissatisfied",
+              "Very Dissatisfied"
+            ],
+            "required": true
+          },
+          {
+            "id": "q6.5",
+            "type": "open-text",
+            "question": "What additional services or amenities would enhance your SENSEA experience?",
+            "required": false
+          }
+        ]
+      },
+      {
+        "id": "section-7",
+        "title": "Areas for Improvement, Final Thoughts",
+        "questions": [
+          {
+            "id": "q7.1",
+            "type": "multiple-select",
+            "question": "What aspects of SENSEA could be improved?",
+            "options": [
+              "Pricing",
+              "Service quality",
+              "Facility cleanliness",
+              "Staff friendliness",
+              "Booking system",
+              "Treatment variety",
+              "Ambiance",
+              "Product selection",
+              "Communication",
+              "Other"
+            ],
+            "allowOther": true,
+            "required": false
+          },
+          {
+            "id": "q7.2",
+            "type": "rating-scale",
+            "question": "On a scale of 1-10, how would you rate your overall experience at SENSEA?",
+            "scale": {
+              "min": 1,
+              "max": 10,
+              "minLabel": "Very poor",
+              "maxLabel": "Excellent"
+            },
+            "required": true
+          },
+          {
+            "id": "q7.3",
+            "type": "multiple-choice",
+            "question": "How likely are you to recommend SENSEA to friends and family?",
+            "options": [
+              "Very Likely (9-10)",
+              "Likely (7-8)",
+              "Neutral (5-6)",
+              "Unlikely (3-4)",
+              "Very Unlikely (1-2)"
+            ],
+            "required": true
+          },
+          {
+            "id": "q7.4",
+            "type": "open-text",
+            "question": "What do you love most about SENSEA?",
+            "required": false
+          },
+          {
+            "id": "q7.5",
+            "type": "open-text",
+            "question": "What changes would make you visit SENSEA more often?",
+            "required": false
+          },
+          {
+            "id": "q7.6",
+            "type": "open-text",
+            "question": "Any additional comments or suggestions?",
+            "required": false
+          }
+        ]
+      },
+      {
+        "id": "section-8",
+        "title": "Demographics (Optional)",
+        "questions": [
+          {
+            "id": "q8.1",
+            "type": "multiple-choice",
+            "question": "Age Range",
+            "options": [
+              "18-24",
+              "25-34",
+              "35-44",
+              "45-54",
+              "55-64",
+              "65+"
+            ],
+            "required": false
+          },
+          {
+            "id": "q8.2",
+            "type": "multiple-choice",
+            "question": "How often do you currently visit SENSEA?",
+            "options": [
+              "Weekly",
+              "2-3 times per month",
+              "Monthly",
+              "Quarterly",
+              "Once or twice a year",
+              "First-time visitor"
+            ],
+            "required": false
+          },
+          {
+            "id": "q8.3",
+            "type": "multiple-choice",
+            "question": "How did you hear about SENSEA?",
+            "options": [
+              "Social media",
+              "Word of mouth",
+              "Online search",
+              "Advertisement",
+              "Local directory",
+              "Other"
+            ],
+            "allowOther": true,
+            "required": false
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "version": "1.0",
+      "year": 2025,
+      "contact": "feedback@sensea.com",
+      "accessibility": {
+        "mobileOptimized": true,
+        "screenReaderCompatible": true,
+        "keyboardNavigable": true
+      }
+    }
+  }
+}
