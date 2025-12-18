@@ -1,239 +1,704 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SENSEA 2025 Feedback Survey</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+sensea-survey/
+  README.md
+  index.html
+  package.json
+  vite.config.js
+  postcss.config.js
+  tailwind.config.js
+  src/
+    main.jsx
+    styles.css
+    App.jsx
+    data/survey.js
+    components/
+      Card.jsx
+      Progress.jsx
+      QuestionBlock.jsx
+      Survey.jsx
+      ThankYou.jsx
+    utils/
+      storage.js
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #000;
-            background: #fff;
-            min-height: 100vh;
-            padding: 20px;
-        }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ["./index.html", "./src/**/*.{js,jsx}"],
+  theme: {
+    extend: {
+      colors: {
+        brand: "#00ccdf",
+      },
+      boxShadow: {
+        soft: "0 10px 30px rgba(0,0,0,0.08)",
+      },
+    },
+  },
+  plugins: [],
+};
 
-        .header {
-            background: #00ccdf;
-            color: white;
-            padding: 40px 30px;
-            text-align: center;
-        }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-        .header h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
+:root {
+  color-scheme: light;
+}
 
-        .header p {
-            font-size: 16px;
-            opacity: 0.9;
-        }
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-        .progress-bar {
-            background: #fff;
-            height: 8px;
-            margin-top: 20px;
-            border-radius: 4px;
-            overflow: hidden;
-        }
+html, body, #root {
+  height: 100%;
+}
 
-        .progress-fill {
-            background: #00ccdf;
-            height: 100%;
-            width: 0%;
-            transition: width 0.3s ease;
-        }
+body {
+  @apply bg-slate-50 text-slate-900;
+}
 
-        .content {
-            padding: 30px;
-        }
+::selection {
+  background: rgba(0, 204, 223, 0.25);
+}
 
-        .question {
-            margin-bottom: 30px;
-            padding: 20px;
-            background: #f9f9f9;
-            border-radius: 8px;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.jsx";
+import "./styles.css";
 
-        .question:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
 
-        .question-label {
-            display: block;
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: #2d3748;
-        }
+import Survey from "./components/Survey.jsx";
 
-        .question-label .required {
-            color: #00ccdf;
-            margin-left: 4px;
-        }
-
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .option {
-            display: flex;
-            align-items: center;
-            padding: 12px;
-            background: white;
-            border: 2px solid #e2e8f0;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .option:hover {
-            border-color: #00ccdf;
-            background: #f7fafc;
-        }
-
-        input[type="radio"],
-        input[type="checkbox"] {
-            margin-right: 12px;
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-        }
-
-        .option label {
-            cursor: pointer;
-            flex: 1;
-            font-size: 15px;
-        }
-
-        textarea {
-            width: 100%;
-            min-height: 100px;
-            padding: 12px;
-            border: 2px solid #e2e8f0;
-            border-radius: 6px;
-            font-family: inherit;
-            font-size: 14px;
-            resize: vertical;
-            transition: border-color 0.2s;
-        }
-
-        textarea:focus {
-            outline: none;
-            border-color: #00ccdf;
-        }
-
-        .button-container {
-            display: flex;
-            gap: 15px;
-            justify-content: space-between;
-            margin-top: 30px;
-            padding-top: 30px;
-            border-top: 2px solid #f0f0f0;
-        }
-
-        button {
-            padding: 14px 30px;
-            font-size: 16px;
-            font-weight: 600;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-primary {
-            background: #00ccdf;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 204, 223, 0.4);
-        }
-
-        .btn-secondary {
-            background: #e2e8f0;
-            color: #4a5568;
-        }
-
-        .btn-secondary:hover {
-            background: #cbd5e0;
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-
-            .header {
-                padding: 30px 20px;
-            }
-
-            .header h1 {
-                font-size: 24px;
-            }
-
-            .content {
-                padding: 20px;
-            }
-
-            .button-container {
-                flex-direction: column;
-            }
-
-            button {
-                width: 100%;
-            }
-        }
-
-        input:focus,
-        textarea:focus,
-        button:focus {
-            outline: 3px solid #00ccdf;
-            outline-offset: 2px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>Welcome to the SENSEA 2025 Feedback Survey</h1>
-            <p>Your input is invaluable as we plan for the next phase of SENSEA SPA.</p>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressBar"></div>
+export default function App() {
+  return (
+    <div className="min-h-full">
+      <header className="sticky top-0 z-10 border-b bg-white/80 backdrop-blur">
+        <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-4">
+          <div className="flex items-center gap-3">
+            <div className="h-9 w-9 rounded-xl bg-brand/15 ring-1 ring-brand/25" />
+            <div>
+              <div className="text-sm font-semibold tracking-wide">SENSEA</div>
+              <div className="text-xs text-slate-500">Top 100 Guest Survey</div>
             </div>
+          </div>
+          <span className="text-xs text-slate-500">5 to 8 minutes</span>
         </div>
+      </header>
 
-        <div class="content" id="surveyContent">
-            <form>
-                <div class="question">
-                    <label class="question-label">
-                        Dear Valued SENSEA Guest,<br>
-                        <br>
-                        Thank you for being one of our Top 100 SENSEA guests. Your support, trust, and consistent visits mean a great deal to us and have played a major role in shaping SENSEA into what it is today.<br>
+      <main className="mx-auto max-w-3xl px-4 py-8">
+        <Survey />
+        <footer className="mt-10 pb-10 text-center text-xs text-slate-500">
+          Thank you for helping shape SENSEA 2025.
+        </footer>
+      </main>
+    </div>
+  );
+}
 
-                        As we plan SENSEA 2025, we are exploring new ways to make our most loyal customers feel even more valued. This includes introducing new offers, improving benefits and experiences, and ensuring you continue to receive exceptional value every time you visit.<br>
-At the same time, we want to protect what matters most: delivering exceptional care through our team, maintaining the quality of our facilities, and keeping the SENSEA experience at the standard you expect.<br>
-Before we introduce any updates, we would truly appreciate your input. This survey will take approximately 5 to 8 minutes, and your feedback will directly guide our decisions.
+export const SURVEY = {
+  id: "sensea-top100-2025",
+  title: "Top 100 SENSEA Guest Survey",
+  intro: {
+    heading: "Dear Valued SENSEA Guest,",
+    body: [
+      "Thank you for being one of our Top 100 SENSEA guests. Your feedback will guide our plans for 2025.",
+      "This survey takes about 5 to 8 minutes.",
+    ],
+  },
+  pages: [
+    {
+      id: "pricing",
+      title: "1. Spa Day Pass Pricing Review",
+      description:
+        "Please share your thoughts on the following proposed prices (all prices exclude HST).",
+      questions: [
+        {
+          id: "pricing_weekday_full_day_70",
+          type: "radio",
+          label: "Full Day Spa Pass (Monday to Thursday) – $70. Does this price feel fair?",
+          options: ["Very fair", "Fair", "Slightly high", "Too high"],
+          required: true,
+        },
+        {
+          id: "pricing_weekend_full_day_75",
+          type: "radio",
+          label: "Full Day Spa Pass (Weekend) – $75. Does this price feel fair?",
+          options: ["Very fair", "Fair", "Slightly high", "Too high"],
+          required: true,
+        },
+        {
+          id: "pricing_morning_prepaid_50",
+          type: "radio",
+          label: "Prepaid Morning Pass (Monday to Thursday) – $50. Does this price feel fair?",
+          options: ["Very fair", "Fair", "Slightly high", "Too high"],
+          required: true,
+        },
+        {
+          id: "pricing_twilight_40",
+          type: "radio",
+          label: "Twilight Pass after 5:30 pm (Monday to Thursday) – $40. Does this price feel fair?",
+          options: ["Very fair", "Fair", "Slightly high", "Too high"],
+          required: true,
+        },
+        {
+          id: "pricing_comment",
+          type: "textarea",
+          label: "Open Comment: Do you have any comments or concerns about the pricing overall?",
+          placeholder: "Type your thoughts here…",
+          required: false,
+        },
+      ],
+    },
+    {
+      id: "membership",
+      title: "2. New Membership Offering Test",
+      description:
+        "We are considering introducing a new off-peak monthly membership (cancel anytime).",
+      questions: [
+        {
+          id: "superpass_interest",
+          type: "radio",
+          label: "Super Pass – $199 per month. Does this membership interest you?",
+          options: ["Very interested", "Somewhat interested", "Neutral", "Not interested"],
+          required: true,
+        },
+        {
+          id: "superpass_fairness",
+          type: "radio",
+          label: "Does the price feel fair for what is offered?",
+          options: ["Very fair", "Fair", "Slightly high", "Too high"],
+          required: true,
+        },
+        {
+          id: "superpass_feedback",
+          type: "textarea",
+          label: "Open Comment: Do you have any feedback or suggestions regarding this membership?",
+          placeholder: "Type your thoughts here…",
+          required: false,
+        },
+        {
+          id: "trial_membership",
+          type: "radio",
+          label:
+            "We are offering 10 trial memberships starting January 2025. Are you interested in a once-off trial?",
+          options: ["Yes", "No", "Maybe"],
+          required: false,
+        },
+      ],
+    },
+    {
+      id: "events",
+      title: "3. Social and Ritual Events",
+      description:
+        "2-hour guided ritual events (hot/cold exposure, breathwork, intention setting). Price excludes HST.",
+      questions: [
+        {
+          id: "events_interest",
+          type: "radio",
+          label: "Social SENSEA Drop-in Events – $50. Does this concept interest you?",
+          options: ["Very interested", "Somewhat interested", "Neutral", "Not interested"],
+          required: true,
+        },
+        {
+          id: "events_fairness",
+          type: "radio",
+          label: "Does the price feel fair?",
+          options: ["Very fair", "Fair", "Slightly high", "Too high"],
+          required: true,
+        },
+        {
+          id: "events_comment",
+          type: "textarea",
+          label: "Open Comment: What are your thoughts on this type of event?",
+          placeholder: "Type your thoughts here…",
+          required: false,
+        },
+      ],
+    },
+    {
+      id: "hours",
+      title: "4. Spa Opening Hours Review (Off-Peak)",
+      description: "We are reviewing off-peak opening hours on weekdays and Sundays.",
+      questions: [
+        {
+          id: "after_5_usage",
+          type: "radio",
+          label: "Do you currently use the spa after 5:00 pm?",
+          options: ["Often", "Sometimes", "Rarely", "Never"],
+          required: true,
+        },
+        {
+          id: "closing_5_impact",
+          type: "radio",
+          label:
+            "If we adjusted closing times to 5:00 pm instead of 7:00 pm on Monday to Thursday and Sundays, would this affect you?",
+          options: ["Yes, significantly", "Yes, slightly", "No impact", "Not applicable"],
+          required: true,
+        },
+        {
+          id: "hours_comment",
+          type: "textarea",
+          label: "Open Comment: Please share any thoughts regarding opening hours.",
+          placeholder: "Type your thoughts here…",
+          required: false,
+        },
+      ],
+    },
+    {
+      id: "loyalty",
+      title: "5. Loyalty Program",
+      description: "We are launching a new loyalty program in January.",
+      questions: [
+        {
+          id: "loyalty_appeal",
+          type: "radio",
+          label: "Every 10th visit is on us. Does this loyalty program appeal to you?",
+          options: ["Yes, very much", "Somewhat", "Neutral", "Not appealing"],
+          required: true,
+        },
+        {
+          id: "loyalty_comment",
+          type: "textarea",
+          label: "Open Comment: Do you have any feedback or ideas for our loyalty program?",
+          placeholder: "Type your thoughts here…",
+          required: false,
+        },
+      ],
+    },
+    {
+      id: "treatments",
+      title: "6. Treatments and Additional Offerings",
+      description: "Please share your thoughts on our current treatment pricing (all prices exclude HST).",
+      questions: [
+        {
+          id: "treatments_fairness",
+          type: "radio",
+          label: "Single RMT Massage Bundle – $185 and Couple’s Massage Bundle – $350. Do these prices feel fair?",
+          options: ["Very fair", "Fair", "Slightly high", "Too high"],
+          required: true,
+        },
+        {
+          id: "treatments_current",
+          type: "textarea",
+          label: "What do you think of the treatments currently offered at SENSEA?",
+          placeholder: "Type your thoughts here…",
+          required: false,
+        },
+        {
+          id: "treatments_improve",
+          type: "textarea",
+          label: "How could our treatments be improved?",
+          placeholder: "Type your ideas here…",
+          required: false,
+        },
+        {
+          id: "treatments_add",
+          type: "textarea",
+          label: "What other treatments or wellness services would you like us to consider adding?",
+          placeholder: "Type your suggestions here…",
+          required: false,
+        },
+      ],
+    },
+    {
+      id: "improvements",
+      title: "7. Areas for Improvement",
+      questions: [
+        {
+          id: "areas_improve",
+          type: "textarea",
+          label: "Do you know of any areas where SENSEA could improve or better support your experience?",
+          placeholder: "Type your response here…",
+          required: false,
+        },
+      ],
+    },
+    {
+      id: "final",
+      title: "Final Thoughts",
+      questions: [
+        {
+          id: "final_thoughts",
+          type: "textarea",
+          label: "Is there anything else you would like to share with us as we plan the next phase of SENSEA?",
+          placeholder: "Anything you want us to know…",
+          required: false,
+        },
+      ],
+    },
+  ],
+};
+
+const KEY = "sensea_survey_state_v1";
+
+export function loadState() {
+  try {
+    const raw = localStorage.getItem(KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+export function saveState(state) {
+  try {
+    localStorage.setItem(KEY, JSON.stringify(state));
+  } catch {
+    // ignore
+  }
+}
+
+export function clearState() {
+  try {
+    localStorage.removeItem(KEY);
+  } catch {
+    // ignore
+  }
+}
+
+export default function Card({ children }) {
+  return (
+    <section className="rounded-2xl bg-white p-6 shadow-soft ring-1 ring-slate-200">
+      {children}
+    </section>
+  );
+}
+
+export default function Progress({ current, total }) {
+  const pct = Math.round((current / total) * 100);
+  return (
+    <div className="space-y-2">
+      <div className="flex items-center justify-between text-xs text-slate-500">
+        <span>Progress</span>
+        <span>{pct}%</span>
+      </div>
+      <div className="h-2 w-full rounded-full bg-slate-100 ring-1 ring-slate-200">
+        <div
+          className="h-2 rounded-full bg-brand"
+          style={{ width: `${pct}%` }}
+          aria-label={`Progress ${pct}%`}
+        />
+      </div>
+    </div>
+  );
+}
+
+export default function QuestionBlock({ q, value, onChange, showError }) {
+  return (
+    <div className="space-y-3">
+      <div className="space-y-1">
+        <label className="block text-sm font-medium text-slate-900">
+          {q.label} {q.required ? <span className="text-brand">*</span> : null}
+        </label>
+        {q.help ? <p className="text-xs text-slate-500">{q.help}</p> : null}
+      </div>
+
+      {q.type === "radio" ? (
+        <div className="grid gap-2">
+          {q.options.map((opt) => (
+            <button
+              type="button"
+              key={opt}
+              onClick={() => onChange(q.id, opt)}
+              className={[
+                "w-full rounded-xl border px-4 py-3 text-left text-sm transition",
+                value === opt
+                  ? "border-brand bg-brand/10 ring-2 ring-brand/25"
+                  : "border-slate-200 bg-white hover:bg-slate-50",
+              ].join(" ")}
+              aria-pressed={value === opt}
+            >
+              {opt}
+            </button>
+          ))}
+        </div>
+      ) : null}
+
+      {q.type === "textarea" ? (
+        <textarea
+          value={value || ""}
+          onChange={(e) => onChange(q.id, e.target.value)}
+          rows={4}
+          placeholder={q.placeholder || ""}
+          className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/25"
+        />
+      ) : null}
+
+      {showError ? (
+        <p className="text-xs text-rose-600">Please select an option to continue.</p>
+      ) : null}
+    </div>
+  );
+}
+
+import Card from "./Card.jsx";
+
+export default function ThankYou({ onReset }) {
+  return (
+    <Card>
+      <div className="space-y-4">
+        <div className="inline-flex items-center gap-2 rounded-full bg-brand/10 px-3 py-1 text-xs font-medium text-slate-700 ring-1 ring-brand/20">
+          Submitted
+        </div>
+        <h1 className="text-xl font-semibold">Thank you.</h1>
+        <p className="text-sm text-slate-600">
+          Your feedback has been recorded. We appreciate you taking the time to help shape the next
+          phase of SENSEA.
+        </p>
+        <button
+          type="button"
+          onClick={onReset}
+          className="rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-800"
+        >
+          Start again
+        </button>
+      </div>
+    </Card>
+  );
+}
+
+import { useMemo, useState } from "react";
+import Card from "./Card.jsx";
+import Progress from "./Progress.jsx";
+import QuestionBlock from "./QuestionBlock.jsx";
+import ThankYou from "./ThankYou.jsx";
+import { SURVEY } from "../data/survey.js";
+import { clearState, loadState, saveState } from "../utils/storage.js";
+
+function initialAnswers() {
+  const saved = loadState();
+  if (saved?.surveyId === SURVEY.id) return saved;
+  return { surveyId: SURVEY.id, pageIndex: 0, answers: {}, submitted: false };
+}
+
+export default function Survey() {
+  const [state, setState] = useState(() => initialAnswers());
+  const page = SURVEY.pages[state.pageIndex];
+  const [touchedNext, setTouchedNext] = useState(false);
+
+  const totalPages = SURVEY.pages.length;
+
+  const requiredUnanswered = useMemo(() => {
+    if (!page) return [];
+    return page.questions
+      .filter((q) => q.required)
+      .filter((q) => {
+        const v = state.answers[q.id];
+        return v === undefined || v === null || String(v).trim() === "";
+      })
+      .map((q) => q.id);
+  }, [page, state.answers]);
+
+  function updateState(next) {
+    setState(next);
+    saveState(next);
+  }
+
+  function setAnswer(id, value) {
+    setTouchedNext(false);
+    updateState({
+      ...state,
+      answers: { ...state.answers, [id]: value },
+    });
+  }
+
+  function prev() {
+    setTouchedNext(false);
+    updateState({ ...state, pageIndex: Math.max(0, state.pageIndex - 1) });
+  }
+
+  function next() {
+    setTouchedNext(true);
+    if (requiredUnanswered.length > 0) return;
+    updateState({ ...state, pageIndex: Math.min(totalPages - 1, state.pageIndex + 1) });
+  }
+
+  async function submit() {
+    setTouchedNext(true);
+    if (requiredUnanswered.length > 0) return;
+
+    // Replace this with your real API endpoint later
+    console.log("SUBMIT PAYLOAD", {
+      surveyId: SURVEY.id,
+      submittedAt: new Date().toISOString(),
+      answers: state.answers,
+    });
+
+    updateState({ ...state, submitted: true });
+  }
+
+  function resetAll() {
+    clearState();
+    setTouchedNext(false);
+    setState({ surveyId: SURVEY.id, pageIndex: 0, answers: {}, submitted: false });
+  }
+
+  if (state.submitted) return <ThankYou onReset={resetAll} />;
+
+  return (
+    <div className="space-y-6">
+      <Card>
+        <div className="space-y-5">
+          <Progress current={state.pageIndex + 1} total={totalPages} />
+
+          <div className="space-y-1">
+            <h1 className="text-lg font-semibold">{page.title}</h1>
+            {page.description ? (
+              <p className="text-sm text-slate-600">{page.description}</p>
+            ) : null}
+          </div>
+
+          <div className="space-y-6">
+            {page.questions.map((q) => (
+              <QuestionBlock
+                key={q.id}
+                q={q}
+                value={state.answers[q.id]}
+                onChange={setAnswer}
+                showError={touchedNext && q.required && requiredUnanswered.includes(q.id)}
+              />
+            ))}
+          </div>
+
+          <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center sm:justify-between">
+            <button
+              type="button"
+              onClick={prev}
+              disabled={state.pageIndex === 0}
+              className="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-900 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              Back
+            </button>
+
+            {state.pageIndex < totalPages - 1 ? (
+              <button
+                type="button"
+                onClick={next}
+                className="rounded-xl bg-brand px-4 py-2.5 text-sm font-semibold text-slate-900 hover:opacity-90"
+              >
+                Next
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={submit}
+                className="rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-800"
+              >
+                Submit
+              </button>
+            )}
+          </div>
+
+          <div className="pt-2 text-xs text-slate-500">
+            Your progress is saved in this browser.
+          </div>
+        </div>
+      </Card>
+    </div>
+  );
+}
+# SENSEA Survey (Top 100)
+
+Clean, mobile-friendly survey app with a calm UI and primary color #00ccdf.
+
+## Tech
+- React + Vite
+- Tailwind CSS
+
+## Run locally
+```bash
+npm install
+npm run dev
+
+npm run build
+npm run preview
+
+
+---
+
+## 3) Push to GitHub
+
+```bash
+git init
+git add .
+git commit -m "Initial survey app"
+git branch -M main
+git remote add origin https://github.com/<your-username>/sensea-survey.git
+git push -u origin main
+
+// Google Apps Script: receive JSON and append to the "Responses" sheet
+
+const SHEET_NAME = "Responses";
+
+function doPost(e) {
+  try {
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    const sheet = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
+
+    // Ensure headers exist
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(["timestamp", "surveyId", "pageIndex", "answers_json"]);
+    }
+
+    const payload = e?.postData?.contents ? JSON.parse(e.postData.contents) : {};
+    const timestamp = new Date();
+    const surveyId = payload.surveyId || "";
+    const pageIndex = typeof payload.pageIndex === "number" ? payload.pageIndex : "";
+    const answersJson = JSON.stringify(payload.answers || {});
+
+    sheet.appendRow([timestamp, surveyId, pageIndex, answersJson]);
+
+    return jsonResponse({ ok: true });
+  } catch (err) {
+    return jsonResponse({ ok: false, error: String(err) }, 500);
+  }
+}
+
+function doGet() {
+  return jsonResponse({ ok: true, message: "Survey endpoint is running" });
+}
+
+function jsonResponse(obj, statusCode) {
+  const output = ContentService
+    .createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+
+  // Note: Apps Script ContentService does not let you set CORS headers directly in all cases.
+  // Using "no-cors" on the client avoids browser blocking, and the row still appends successfully.
+  return output;
+}
+const ENDPOINT = "PASTE_YOUR_WEB_APP_URL_HERE";
+
+async function submit() {
+  setTouchedNext(true);
+  if (requiredUnanswered.length > 0) return;
+
+  const payload = {
+    surveyId: SURVEY.id,
+    pageIndex: state.pageIndex,
+    submittedAt: new Date().toISOString(),
+    answers: state.answers,
+  };
+
+  try {
+    // Using no-cors keeps it dead simple with Apps Script Web Apps.
+    // The request will still write to the sheet even though the response is opaque to the browser.
+    await fetch(ENDPOINT, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    updateState({ ...state, submitted: true });
+  } catch (e) {
+    alert("Submission failed. Please try again.");
+  }
+}
+
+            
